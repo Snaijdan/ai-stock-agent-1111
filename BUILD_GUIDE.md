@@ -2,56 +2,72 @@
 
 This guide outlines the development priorities and tasks for building out the AI Stock Agent application.
 
-## 🎯 Development Priorities
+## 🎯 Development Priorities (VN Market Focused)
 
-### Phase 1: Core Data & API Integration (High Priority)
-**Goal**: Establish reliable data pipeline from vnstock API
-
-#### Tasks:
-1. **Implement vnstock_fetcher.py**
-   - Fetch OHLCV data for Vietnamese stocks
-   - Support multiple timeframes (1m, 5m, 15m, 30m, 1h, 1d, 1w, 1M)
-   - Implement data caching mechanism
-   - Handle API errors and retries
-   - Rate limiting compliance
-
-2. **Create data models/dataclasses**
-   - Define OHLCV data structure
-   - Stock metadata
-   - Candlestick data
-   - Volume data
-
-3. **Implement data validation**
-   - Verify data integrity
-   - Check for gaps in time series
-   - Validate OHLCV relationships (H >= O, L <= O, etc.)
-
-### Phase 2: Technical Analysis Indicators (High Priority)
-**Goal**: Calculate all required technical indicators
+### Phase 1: VN-Specific Session & Volume Analysis (CRITICAL)
+**Goal**: Implement VN market session analysis and money flow detection
 
 #### Tasks:
-1. **Implement core indicators (src/indicators/technical.py)**
-   - Simple Moving Average (SMA)
-   - Exponential Moving Average (EMA)
-   - Relative Strength Index (RSI)
-   - MACD (Moving Average Convergence Divergence)
-   - Bollinger Bands
-   - Average True Range (ATR)
-   - Average Directional Index (ADX)
-   - Stochastic Oscillator
+1. **Implement VN Session Analyzer** (`src/vnmarket/session_analyzer.py`) ✅ READY
+   - Morning (09:15-11:30) vs Afternoon (13:00-15:00) volume breakdown
+   - ATO (9:15-9:30) analysis - volume, direction, predictive power
+   - Close (14:45-15:00) analysis - volume spike, direction confirmation
+   - Session momentum calculation
+   - Session pattern recognition (morning trend → afternoon continuation/reversal)
+   - Daily summary with all metrics
 
-2. **Implement volume indicators (src/indicators/volume.py)**
-   - Money Flow Index (MFI)
-   - Chaikin Money Flow (CMF)
-   - On-Balance Volume (OBV)
-   - Accumulation/Distribution Line (A/D)
-   - Volume Rate of Change (VROC)
+2. **Implement Liquidity Analyzer** (`src/vnmarket/liquidity_analyzer.py`) ✅ READY
+   - Bid-ask spread estimation and tracking
+   - Volume by price level (POC - Point of Control)
+   - Liquidity score calculation (0-100)
+   - Liquidity zones (thick vs thin)
+   - Large order detection (whale orders >50k shares)
+   - Order book imbalance detection
+   - Slippage estimation for different order sizes
+   - Best entry level recommendation
 
-3. **Implement pattern recognition**
-   - Support/Resistance detection
-   - Trend identification
-   - Candlestick patterns
-   - Moving average crossovers
+3. **Implement VN Alert System** (`src/vnmarket/vn_alerts.py`) ✅ READY
+   - Breakout alerts (with volume confirmation)
+   - Volume spike alerts (>200% average)
+   - Strong close alerts (high volume + direction)
+   - Momentum alerts (2%+ moves)
+   - Spread widening alerts (liquidity warning)
+   - Trend reversal alerts (MA crossovers)
+   - Level test alerts (S/R approach)
+   - Multi-level alert priority system
+
+4. **Core Data Integration**
+   - Fetch OHLCV data from vnstock API
+   - Support 1-minute and 5-minute candles (for intraday analysis)
+   - Daily candles (for swing trading)
+   - Data caching mechanism
+   - Error handling and retries
+
+### Phase 2: VN-Specific Levels & Institutional Flow (High Priority)
+**Goal**: Identify VN-specific price levels and detect institutional trading
+
+#### Tasks:
+1. **Implement VN Level Detection** (`src/vnmarket/vn_levels.py`)
+   - Psychological levels (round numbers: 100, 200, 500, 1000 VND)
+   - Decade levels (10,000, 20,000, 50,000 VND) - VN traders focus on these
+   - 52-week highs/lows
+   - Previous day OHLC levels
+   - Trend lines (higher lows, lower highs)
+   - Level clustering (confluence zones)
+   - Level strength scoring (X touches = stronger level)
+
+2. **Implement Institutional Flow Detection**
+   - Large block order detection (>50k, >100k shares)
+   - Foreign investor flow direction (if data available)
+   - Accumulation vs Distribution patterns
+   - Domestic fund buying/selling patterns
+   - Retail panic indicators
+
+3. **Implement Technical Indicators** (`src/indicators/technical.py` - Already templated)
+   - Core indicators: SMA, EMA, RSI, MACD, Bollinger Bands
+   - Volatility: ATR, ADX
+   - Momentum: Stochastic, ROC, CCI
+   - Focus on using these with VN liquidity patterns
 
 ### Phase 3: UI/Dashboard Enhancement (Medium Priority)
 **Goal**: Create interactive, professional-grade dashboard
