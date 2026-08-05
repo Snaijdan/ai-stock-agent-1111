@@ -1,0 +1,22 @@
+SETUP & TEST CLOUD AGENT SESSION
+
+Step 1: Install dependencies
+pip install -r requirements.txt
+
+Step 2: Verify imports
+python -c "import sys; sys.path.insert(0, '.'); from src.main import *; print('OK')"
+
+Step 3: Run tests
+python test_vnstock.py
+python test_indicators.py
+python test_session.py
+python test_liquidity.py
+python test_alerts.py
+
+Step 4: Commit results
+If tests pass: git add . && git commit -m "test: Cloud agent successfully validated all modules"
+If tests fail: git add . && git commit -m "test: Report test failures for debugging"
+
+Then: git push origin main
+
+That's it. Simple validation session.
