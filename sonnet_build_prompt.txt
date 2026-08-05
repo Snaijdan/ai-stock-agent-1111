@@ -1,0 +1,52 @@
+SONNET BUILD - VIETNAMESE STOCK MARKET FEATURES
+
+You have 3 MINUTES from now. Build the core VN market analysis features.
+
+ENVIRONMENT IS READY:
+- Dependencies installed (vnstock>=3.5.0, pandas, streamlit, etc.)
+- All modules import successfully
+- Git configured for commits
+
+PRIORITY ORDER - Build in this sequence:
+
+PHASE 1: VN Session Analysis Integration (1 minute)
+1. Implement vnstock data fetching (src/data/vnstock_fetcher.py)
+   - Fetch real OHLCV data for 'VNI' stock
+   - Test with 30 days of data
+2. Wire session analyzer to Streamlit UI (src/main.py)
+   - Display morning/afternoon/ATO/close metrics
+   - Show session momentum
+
+PHASE 2: Liquidity Analysis (1 minute)
+1. Test liquidity_analyzer.py with real data
+2. Add to UI:
+   - Liquidity score (0-100)
+   - POC (Point of Control)
+   - Spread estimate
+3. Display "Good/Fair/Poor" liquidity status
+
+PHASE 3: Alert System & Commit (1 minute)
+1. Test vn_alerts.py
+2. Integrate top 3 alerts into UI
+3. Final commit and push:
+   git add .
+   git commit -m "feat: Implement VN session + liquidity analysis
+
+   - Implement vnstock API data fetching
+   - Wire VN session analyzer to Streamlit UI
+   - Display morning/afternoon/ATO/close analysis
+   - Add liquidity score and POC detection
+   - Integrate alert system (breakout, volume, strong close)
+   - Test all components with real data
+   - All modules working correctly"
+   git push origin main
+
+EXECUTION RULES:
+- Use existing module code (don't rewrite)
+- Test with real data before committing
+- If vnstock API unavailable, document it and continue
+- Focus: working features > perfect features
+- Commit ONLY working code
+
+SUCCESS = 1 working feature committed to GitHub
+START NOW - No more delays!
